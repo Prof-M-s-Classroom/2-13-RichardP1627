@@ -51,6 +51,17 @@ public:
         length++;
     }
 
+    Node<T> *get(int index) {
+        if (index < 0 || index >= length) {
+            return nullptr;
+        }
+        Node<T> *temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp -> next;
+        }
+        return temp;
+    }
+
     void delfirst() {
         Node<T> *temp = head;
         head = head->next;
@@ -68,10 +79,44 @@ public:
 
     void deleteNode(int index) {
        //TODO:Write the function to delete at the given index. Reuse the pre-written functions for edge cases. Account for missing index.
+        if (index < 0 || index >= length) {
+            cout << "Index out of bounds" << endl;
+            return;
+        }
+        if (index == 0) {
+            delfirst();
+        }
+        else if (index == length - 1) {
+            dellast();
+        }
+        else {
+            Node<T>* temp = get(index - 1);
+            Node<T>* temp2 = get(index + 1);
+            temp -> next = temp2;
+        }
+        return;
     }
 
    void insert(int index, T *value) {
         //TODO:Write a function to insert a new node at a give index. Reuse the pre-written functions for edge cases. Account for missing index
+        if (index < 0 || index >= length) {
+            cout << "Index out of bounds" << endl;
+            return;
+        }
+        if (index == 0) {
+            addHead(value);
+        }
+        else if (index == length - 1) {
+            add(value);
+        }
+        else {
+            Node<T>* newNode = new Node<T>(value);
+            Node<T>* temp = get(index - 1);
+            newNode -> next = temp -> next;
+            temp -> next = newNode;
+            length++;
+        }
+        return;
     }
 
    void reverselist(){
