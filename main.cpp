@@ -71,8 +71,9 @@ public:
 
     void dellast() {
         Node<T> *temp = head;
-        while (temp->next!=NULL)
+        while (temp->next!=NULL) {
             temp = temp->next;
+        }
         delete temp;
         length--;
     }
@@ -91,8 +92,9 @@ public:
         }
         else {
             Node<T>* temp = get(index - 1);
-            Node<T>* temp2 = get(index + 1);
-            temp -> next = temp2;
+            Node<T>* temp2 = get(index);
+            temp -> next = get(index + 1);
+            delete temp2;
         }
         return;
     }
@@ -121,6 +123,16 @@ public:
 
    void reverselist(){
         //TODO:Write a function to reverse the list using the logic from the slide.
+        Node<T>* prev = new Node<T>(nullptr);
+        Node<T>* temp = head;
+        Node<T>* nextNode = new Node<T>(nullptr);
+        while (temp != NULL) {
+            nextNode = temp -> next;
+            temp -> next = prev;
+            prev = temp;
+            temp = nextNode;
+        }
+        head = prev;
     }
 
     void print() {
@@ -141,8 +153,12 @@ int main() {
     ll->add(s2);
     ll->addhead(s3);
     ll->print();
-    ll->delfirst();
-    ll->print();
-    ll->dellast();
-    ll->print();
+    //ll->delfirst();
+    //ll->print();
+    //ll->dellast();
+    //ll->print();
+    ll-> deleteNode(1);
+    ll -> print();
+    ll -> reverselist();
+    ll -> print();
 }
